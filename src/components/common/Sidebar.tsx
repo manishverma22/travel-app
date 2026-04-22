@@ -1,6 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export default function Sidebar({ isOpen, setIsOpen, collapsed, setCollapsed }: any) {
+export default function Sidebar({ isOpen, collapsed, setCollapsed }: any) {
   const menuItems = [
     { name: "Dashboard", path: "/", icon: "📊" },
     { name: "Search", path: "/search", icon: "🔍" },

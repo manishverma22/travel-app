@@ -81,7 +81,7 @@ export default function SearchResults() {
         capital: country?.capital?.[0],
         region: country?.region,
         population: country?.population,
-        currency: Object.values(country?.currencies || {})?.[0]?.name,
+        currency: (Object.values(country?.currencies || {})?.[0] as any)?.name,
         languages: Object.values(country?.languages || {})?.join(", "),
       },
       attractions: attractions.slice(0, 8),
