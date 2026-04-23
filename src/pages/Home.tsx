@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getDashboardStats } from "../utils/dashboardStats";
+import { getDashboardStats, getRecentTrips } from "../utils/dashboardStats";
 import StatCard from "../components/common/StatCard";
+import RecentTrips from "../components/dashboard/RecentTrips";
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -9,9 +10,11 @@ export default function Home() {
     upcomingTrips: 0,
   });
 
+  const [recentTrips, setRecentTrips] = useState<any[]>([]);
+
   useEffect(() => {
-    const data = getDashboardStats();
-    setStats(data);
+    setStats(getDashboardStats());
+    setRecentTrips(getRecentTrips(5));
   }, []);
 
   return (
@@ -34,19 +37,22 @@ export default function Home() {
           value={stats.totalTrips}
           color="text-blue-600"
         />
-
         <StatCard
           title="Saved Destinations"
           value={stats.uniqueDestinations}
           color="text-indigo-600"
         />
-
         <StatCard
           title="Upcoming Trips"
           value={stats.upcomingTrips}
           color="text-green-600"
         />
       </div>
+
+      {/* Recent Trips */}
+      {stats.totalTrips > 0 && (
+        <RecentTrips trips={recentTrips} />
+      )}
 
       {/* Empty State */}
       {stats.totalTrips === 0 && (

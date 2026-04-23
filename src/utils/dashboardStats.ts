@@ -28,3 +28,11 @@ export function getDashboardStats() {
     upcomingTrips,
   };
 }
+
+export function getRecentTrips(limit = 6) {
+  const trips = JSON.parse(localStorage.getItem("savedTrips") || "[]");
+
+  if (!Array.isArray(trips)) return [];
+
+  return trips.slice(-limit).reverse();
+}
