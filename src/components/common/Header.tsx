@@ -85,7 +85,7 @@ export default function Header({ toggleSidebar }: any) {
 
             {/* Premium Dropdown */}
             {open && (
-              <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden ring-1 ring-black ring-opacity-5 animate-in fade-in zoom-in duration-200">
+              <div className="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden ring-1 ring-black ring-opacity-5 animate-in fade-in zoom-in duration-200 z-50">
                 <div className="px-5 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                   <p className="text-xs font-semibold text-gray-400 uppercase">Account</p>
                   <p className="text-sm font-bold text-gray-800 dark:text-white truncate">{user.email}</p>

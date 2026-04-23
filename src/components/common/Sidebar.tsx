@@ -1,11 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function Sidebar({ isOpen, collapsed, setCollapsed }: any) {
+export default function Sidebar({ isOpen, setIsOpen, collapsed, setCollapsed }: any) {
+  const location = useLocation();
+
   const menuItems = [
     { name: "Dashboard", path: "/", icon: "📊" },
     { name: "Search", path: "/search", icon: "🔍" },
     { name: "Saved Trips", path: "/saved-trips", icon: "💾" },
   ];
+
+  // ✅ Auto close on route change (important)
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <aside
@@ -21,7 +29,12 @@ export default function Sidebar({ isOpen, collapsed, setCollapsed }: any) {
           </span>
         )}
         <button 
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => {
+            setCollapsed(!collapsed);
+            if (window.innerWidth < 768) {
+              setIsOpen(false);
+            }
+          }}
           className="p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
         >
           {collapsed ? "➡️" : "⬅️"}
@@ -35,6 +48,10 @@ export default function Sidebar({ isOpen, collapsed, setCollapsed }: any) {
             key={item.path}
             to={item.path}
             end={item.path === "/"}
+
+            // ✅ CLOSE SIDEBAR ON CLICK (mobile)
+            onClick={() => setIsOpen(false)}
+
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 group
               ${isActive 
@@ -43,12 +60,10 @@ export default function Sidebar({ isOpen, collapsed, setCollapsed }: any) {
               }`
             }
           >
-            <span className={`text-lg transition-transform group-hover:scale-110`}>
+            <span className="text-lg transition-transform group-hover:scale-110">
               {item.icon}
             </span>
             {!collapsed && <span className="truncate">{item.name}</span>}
-            
-            {/* Tooltip for collapsed mode would go here */}
           </NavLink>
         ))}
       </nav>
